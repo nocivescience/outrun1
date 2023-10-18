@@ -15,6 +15,10 @@ var $ = {
         roadLine: "#FFF",
         hud: "#FFF"
     },
+    colorsLight: {
+        hightRed: "##ff0000",
+        lowRed: "fb8b8b",
+    },
     settings: {
         fps: 60,
         skySize: 120,
@@ -239,6 +243,7 @@ function move(e, isKeyDown) {
 
     if (e.keyCode === 37) {
         $.state.keypress.left = isKeyDown;
+        $.leftLight = isKeyDown;
     }
 
     if (e.keyCode === 38) {
@@ -247,6 +252,7 @@ function move(e, isKeyDown) {
 
     if (e.keyCode === 39) {
         $.state.keypress.right = isKeyDown;
+        $.rightLight = isKeyDown;
     }
 
     if (e.keyCode === 40) {
@@ -376,9 +382,14 @@ function drawCarBody(ctx) {
     roundedRect(ctx, "#474747", startX - 4, startY, 169, 10, 3, true, 0.2);
     roundedRect(ctx, "#474747", startX + 40, startY + 5, 80, 10, 5, true, 0.1);
 
-    ctx.fillStyle = "#FF9166";
+    // ctx.fillStyle = "#FF9166";
 
     lights.forEach(function (xPos) {
+        if(xPos<30){
+            ctx.fillStyle = $.leftLight?'red':'salmon';
+        }else if(xPos>30){
+            ctx.fillStyle = $.rightLight?'red':'salmon';
+        }
         ctx.beginPath();
         ctx.arc(startX + xPos, startY + 20 + lightsY, 6, 0, Math.PI * 2, true);
         ctx.closePath();
